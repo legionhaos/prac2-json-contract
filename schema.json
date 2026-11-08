@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TelemetryPacketContract",
+  "description": "Контракт данных пакета телеметрии куста скважин (Вариант Б)",
+  "type": "object",
+  "required": [
+    "pad_id",
+    "well_id",
+    "p_res_mpa",
+    "p_bhp_mpa",
+    "mode",
+    "is_online",
+    "sensors"
+  ],
+  "properties": {
+    "pad_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Идентификатор кустовой площадки"
+    },
+    "well_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Код скважины"
+    },
+    "p_res_mpa": {
+      "type": "number",
+      "minimum": 5.0,
+      "maximum": 60.0,
+      "description": "Пластовое давление, МПа"
+    },
+    "p_bhp_mpa": {
+      "type": "number",
+      "minimum": 1.0,
+      "maximum": 60.0,
+      "description": "Забойное давление, МПа"
+    },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "FLOWING",
+        "PUMPING",
+        "SHUT_IN"
+      ],
+      "description": "Режим эксплуатации скважины"
+    },
+    "is_online": {
+      "type": "boolean",
+      "description": "Признак связи со станцией (добавлено в Челлендже 1)"
+    },
+    "sensors": {
+      "type": "array",
+      "minItems": 2,
+      "description": "Список замеров с датчиков",
+      "items": {
+        "type": "object",
+        "required": [
+          "code",
+          "value",
+          "unit"
+        ],
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Код датчика в массиве"
+          },
+          "value": {
+            "type": "number",
+            "description": "Измеренное показание датчика"
+          },
+          "unit": {
+            "type": "string",
+            "enum": [
+              "MPa",
+              "C",
+              "m3/d"
+            ],
+            "description": "Единица измерения датчика"
+          }
+        }
+      }
+    }
+  }
+}
